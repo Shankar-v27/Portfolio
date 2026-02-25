@@ -667,7 +667,7 @@ footer{
   
   /* Mobile navigation */
   .nav-links{
-    position:fixed;top:0;right:-100%;width:80%;height:100vh;
+    position:fixed;top:0;right:0;width:80%;height:100vh;
     background:var(--bg2);flex-direction:column;
     padding:80px 40px;z-index:9999;
     transition:right .3s ease;
@@ -676,13 +676,14 @@ footer{
     display:flex !important; /* Override desktop display:none */
     gap:0 !important; /* Override desktop gap */
   }
-  .nav-links.active{right:0}
+  .nav-links.hidden{right:-100%}
   .nav-links li{margin-bottom:24px;list-style:none}
   .nav-links a{
     font-size:18px;color:var(--white);text-decoration:none;
     font-family:'Outfit',sans-serif;font-weight:500;
     transition:color .2s ease;
     position:static !important; /* Override desktop positioning */
+    padding:10px 0;
   }
   .nav-links a:hover{color:var(--cyan)}
   .nav-links a::after{display:none !important} /* Hide desktop underline */
@@ -1376,19 +1377,35 @@ window.addEventListener('load', () => {
 });
 
 // ── MOBILE MENU ──
+document.addEventListener('DOMContentLoaded', function() {
+  if(window.innerWidth <= 768) {
+    const navLinks = document.getElementById('nav-links');
+    if(navLinks) {
+      navLinks.classList.add('hidden');
+    }
+  }
+});
+
 function toggleMobileMenu(){
   console.log('Toggle menu clicked'); // Debug log
   const navLinks = document.getElementById('nav-links');
   const toggle = document.getElementById('mobile-menu-toggle');
-  navLinks.classList.toggle('active');
-  toggle.classList.toggle('active');
+  
+  if(navLinks.classList.contains('hidden')) {
+    navLinks.classList.remove('hidden');
+    toggle.classList.add('active');
+  } else {
+    navLinks.classList.add('hidden');
+    toggle.classList.remove('active');
+  }
+  
   console.log('Menu classes:', navLinks.className, toggle.className); // Debug log
 }
 function closeMobileMenu(){
   console.log('Closing menu'); // Debug log
   const navLinks = document.getElementById('nav-links');
   const toggle = document.getElementById('mobile-menu-toggle');
-  navLinks.classList.remove('active');
+  navLinks.classList.add('hidden');
   toggle.classList.remove('active');
 }
 
