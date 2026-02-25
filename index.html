@@ -673,11 +673,19 @@ footer{
     transition:right .3s ease;
     border-left:1px solid var(--glass-border);
     box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    display:flex !important; /* Override desktop display:none */
+    gap:0 !important; /* Override desktop gap */
   }
   .nav-links.active{right:0}
   .nav-links li{margin-bottom:24px;list-style:none}
-  .nav-links a{font-size:18px;color:var(--white);text-decoration:none;font-family:'Outfit',sans-serif;font-weight:500;transition:color .2s ease}
+  .nav-links a{
+    font-size:18px;color:var(--white);text-decoration:none;
+    font-family:'Outfit',sans-serif;font-weight:500;
+    transition:color .2s ease;
+    position:static !important; /* Override desktop positioning */
+  }
   .nav-links a:hover{color:var(--cyan)}
+  .nav-links a::after{display:none !important} /* Hide desktop underline */
   
   .mobile-menu-toggle{
     display:block;width:40px;height:30px;position:relative;
